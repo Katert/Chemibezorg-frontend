@@ -20,7 +20,7 @@ function App() {
 							component={PlannedShipments}
 						/>
 						<Route
-							path="/Plan-shipment"
+							path="/plan-shipment"
 							component={CreateShipment}
 						/>
 					</div>
