@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { HashRouter, Route } from "react-router-dom";
+
+// Component imports
+import NavBar from "./Components/NavBar/NavBar";
+import SideBar from "./Components/Sidebar/SideBar";
+import PlannedShipments from "./Components/PlannedShipments/PlannedShipments";
+import CreateShipment from "./Components/CreateShipment/CreateShipment";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<HashRouter basename="/">
+			<div className="App">
+				<NavBar />
+				<div className="main-container">
+				<SideBar/>
+					<div className="main-section">
+						<Route
+							path="/overview-shipments"
+							component={PlannedShipments}
+						/>
+						<Route
+							path="/Plan-shipment"
+							component={CreateShipment}
+						/>
+					</div>
+				</div>
+			</div>
+		</HashRouter>
+	);
 }
 
 export default App;
