@@ -5,21 +5,25 @@
 }
 
 html {
-  background-color: rgb(235, 235, 235);
+  background-color: rgb(252, 252, 252);
+}
+
+@font-face {
+  font-family: SF-Pro;
+  src: url('./Style/fonts/SfPro.woff');
 }
 
 .App {
 	width: 100vw;
 	height: 100vh;
 	display: flex;
-	font-family: "Source Sans Pro", sans-serif;
+	font-family: SF-Pro;
 }
 
 .main-container {
   width: 100%;
 	margin-top: 90px;
   display: flex;
-  justify-content: space-around;
 }
 
 .main-section {
@@ -29,16 +33,12 @@ html {
   justify-content: center;
 }
 
-.content-section {
-  width: 70%;
-  height: 600px;
-  overflow: scroll;
-  background: rgb(255, 255, 255);
-  border-radius: 5px;
-  padding: 30px;
-  justify-self: center;
-  align-self: center;
-  -webkit-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
-	-moz-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
-	box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+/* Remove arrows from number input fields */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
 }

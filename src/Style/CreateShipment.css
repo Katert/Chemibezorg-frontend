@@ -1,0 +1,95 @@
+.create-section {
+	width: 60%;
+	height: 600px;
+	overflow: scroll;
+	background: rgb(0, 0, 0);
+	color: white;
+	border: 1px black solid;
+	border-radius: 20px;
+	padding: 30px;
+	margin: 10px;
+	justify-self: center;
+	align-self: center;
+	-webkit-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+	-moz-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+	box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+}
+
+.warning-section {
+	width: 20%;
+	height: 40%;
+	overflow: scroll;
+	background: rgb(241, 193, 35);
+	color: black;
+	border-radius: 20px;
+	padding: 30px;
+	align-self: center;
+	-webkit-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+	-moz-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+	box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+}
+
+.create-section h1,
+.summary-section h1 {
+	text-decoration: underline;
+	margin-bottom: 20px;
+}
+
+.products-table {
+	margin-top: 10px;
+	width: 100%;
+}
+
+.products-table th {
+	text-align: left;
+}
+
+.product-order {
+	background-color: white;
+	color: black;
+	border-radius: 20px;
+	border: none;
+	padding: 5px;
+	text-align: center;
+	transition: 0.3s;
+	width: 50px;
+}
+
+.product-order:hover {
+	background-color: rgb(67, 221, 188);
+	color: black;
+}
+
+.shipment-fields {
+	margin-top: 20px;
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.field {
+	margin: 5px;
+}
+
+.field input {
+	margin-top: 5px;
+	width: 90%;
+	border-radius: 5px;
+	border: none;
+	padding: 5px;
+	transition: 0.3s;
+	font-size: 12px;
+}
+
+.field input:hover {
+	background-color: rgb(67, 221, 188);
+}
+
+#submit-button {
+	display: flex;
+	align-items: center;
+}
+
+.summary-table {
+  width: 100%;
+}

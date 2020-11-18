@@ -1,13 +1,54 @@
-.content-section {
-    width: 70%;
-    height: 600px;
-    overflow: scroll;
-    background: rgb(255, 255, 255);
-    border-radius: 5px;
-    padding: 30px;
-    justify-self: center;
-    align-self: center;
-    -webkit-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
-    -moz-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
-    box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
-  }
+.overview-section {
+  width: 80%;
+  height: 600px;
+  overflow: scroll;
+  background: rgb(0, 0, 0);
+  border-radius: 20px;
+  border: 1px black solid;
+  padding: 20px;
+  justify-self: center;
+  align-self: center;
+  -webkit-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+	-moz-box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+  box-shadow: 2px 2px 6px -6px rgb(0, 0, 0);
+  color: white;
+}
+
+.overview-section h1 {
+  text-decoration: underline;
+}
+
+.orders-table {
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+
+.orders-table td {
+  background-color: white;
+  color: black;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.order-searchbar {
+  margin-top: 20px;
+}
+
+.order-searchbar input {
+  color: rgb(0, 0, 0);
+  line-height: 20px;
+  width: 128px;
+  margin-top: 5px;
+  border-radius: 20px;
+  border: none;
+  transition: 0.3s;
+  padding: 5px;
+  text-align: center;
+}
+
+.order-searchbar input:hover {
+  background-color: rgb(67, 221, 188);
+  color: black;
+}

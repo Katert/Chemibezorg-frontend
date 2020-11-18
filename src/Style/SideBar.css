@@ -3,7 +3,7 @@
     width: 200px;
     display: flex;
     justify-content: center;
-    -webkit-box-shadow: 2px 0px 6px -6px rgb(0, 0, 0);
+    -webkit-box-shadow: 2px 0px 6px -6px rgb(255, 255, 255);
 	-moz-box-shadow: 2px 0px 6px -6px rgb(0, 0, 0);
     box-shadow: 2px 0px 6px -6px rgb(0, 0, 0);
 }
@@ -22,23 +22,20 @@
 .sidebar-item {
     text-decoration: none;
 	cursor: pointer;
-    color: white;
-    background-color: black;
-    border-radius: 5px;
+    color: black;
+    /* background-color: black; */
 	transition: 0.2s;
     font-weight: 700;
     padding: 7px;
     display: block;
-    border-bottom: 3px rgb(0, 0, 0) solid;
+    border-radius: 18px;
 }
 
 .sidebar-item.active {
-    border-bottom: 3px rgb(103, 212, 136) solid;
+    background-color:rgb(67, 221, 188);
 }
 
 .sidebar-item:hover {
-	color: rgb(255, 255, 255);
-	border-bottom: 3px rgb(103, 212, 136) solid;
     background-color: black;
-    border-radius: 5px;
+    color: white;
 }
