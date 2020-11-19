@@ -100,7 +100,7 @@ class CreateShipment extends Component {
 	checkForbiddenCombination = () => {
 
 		let productsChosen = this.state.shipment.productsChosen;
-		let warning;
+		let warningMessage;
 		let reason;
 		let explosionDanger = 'Lood en zwavel leidt tot ontploffingsgevaar.';
 		let odourNuisance = 'Water en goud geeft ernstige stankoverlast.';
@@ -111,14 +111,14 @@ class CreateShipment extends Component {
 			if (productsChosen[i].productId === 1) {
 				for (let j = 0; j < productsChosen.length; j++) {
 
-					warning = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
+					warningMessage = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
 					if (productsChosen[j].productId === 3 || productsChosen[j].productId === 5) {
 						reason = explosionDanger;
-						alert(warning + reason);
+						alert(warningMessage + reason);
 						this.buttonRef.current.setAttribute("disabled", true);
 					} else if (productsChosen[j].productId === 4) {
 						reason = odourNuisance;
-						alert(warning + reason);
+						alert(warningMessage + reason);
 						this.buttonRef.current.setAttribute("disabled", true);
 					}
 				}
@@ -128,14 +128,14 @@ class CreateShipment extends Component {
 			// Check for forbidden combinations with Zwavelwater
 			if (productsChosen[i].productId === 3) {
 				for (let j = 0; j < productsChosen.length; j++) {
-					warning = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
+					warningMessage = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
 					if (productsChosen[j].productId === 2) {
 						reason = odourNuisance;
-						alert(warning + reason);
+						alert(warningMessage + reason);
 						this.buttonRef.current.setAttribute("disabled", true);
 					} else if (productsChosen[j].productId === 4) {
 						reason = explosionDanger;
-						alert(warning + reason);
+						alert(warningMessage + reason);
 						this.buttonRef.current.setAttribute("disabled", true);
 					}
 				}
@@ -144,10 +144,10 @@ class CreateShipment extends Component {
 			// Check for forbidden combinations with Loodgouduranium
 			if (productsChosen[i].productId === 4) {
 				for (let j = 0; j < productsChosen.length; j++) {
-					warning = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
+					warningMessage = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
 					if (productsChosen[j].productId === 5) {
 						reason = explosionDanger;
-						alert(warning + reason);
+						alert(warningMessage + reason);
 						this.buttonRef.current.setAttribute("disabled", true);
 					}
 				}
