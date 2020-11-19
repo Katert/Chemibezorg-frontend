@@ -5,6 +5,7 @@ because of various dangers.
 
 # TODO
 
+- Implement conditions to check for forbidden ingredients instead of products (also for back end).
 - Set disabled button to false when there are no forbidden combinations.
 - Create modal with shipment details when user clicks on 'Show' in 'Overview shipments'.
 - Design user login form.
