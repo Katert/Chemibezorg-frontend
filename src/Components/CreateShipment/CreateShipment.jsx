@@ -19,11 +19,11 @@ class CreateShipment extends Component {
 				productsChosen: [],
 			},
 			allProducts: [],
-			warningMessage: "",
 			buttonHoverText: "You can't place an order if there's a forbidden combination of products."
 		};
 	}
 
+	// Create reference for 'Place order' button
 	buttonRef = createRef();
 
 	// Retrieve products from database
@@ -40,6 +40,7 @@ class CreateShipment extends Component {
 
 	}
 
+
 	generateProductList = () => {
 		let products = this.state.allProducts;
 		
@@ -54,6 +55,7 @@ class CreateShipment extends Component {
 			);
 		})
 	}
+
 
 	handleAmount = (productId, productName, amount) => {
 
@@ -70,16 +72,16 @@ class CreateShipment extends Component {
 				// Remove product from productsChosen if amount is empty or 0
 				if (productsChosen[i].amount <= 0 || Number.isNaN(productsChosen[i].amount)) {
 					productsChosen.splice(productsChosen.indexOf(productsChosen[i]), 1);
-					console.log(productsChosen);
+					// console.log(productsChosen);
 					return;
 				}
 
-				console.log(productsChosen)
+				// console.log(productsChosen)
 				return;
 			}
 		}
 
-		// Add product object to state
+		// Add product object to productsChosen
 		let productWithAmount = {
 			productId: productId,
 			productName: productName,
@@ -87,64 +89,93 @@ class CreateShipment extends Component {
 		}
 		productsChosen.push(productWithAmount);
 
-		this.checkForForbiddenCombination();
-		console.log(productsChosen)
+		this.checkForbiddenCombination();
+		// console.log(this.state.shipment)
 	}
 
+	warningMessage = (chemicalOne, chemicalTwo) => {
+		return `${chemicalOne} en ${chemicalTwo} mogen niet gecombineerd worden in dezelfde zending.\n\n`;
+	}
 
-	checkForForbiddenCombination = () => {
+	checkForbiddenCombination = () => {
 
 		let productsChosen = this.state.shipment.productsChosen;
+		let warning;
+		let reason;
+		let explosionDanger = 'Lood en zwavel leidt tot ontploffingsgevaar.';
+		let odourNuisance = 'Water en goud geeft ernstige stankoverlast.';
 
 		for (let i = 0; i < productsChosen.length; i++) {
 
 			// Check for forbidden combinations with Loodwater
 			if (productsChosen[i].productId === 1) {
 				for (let j = 0; j < productsChosen.length; j++) {
-					if (productsChosen[j].productId === 3 || productsChosen[j].productId === 5 || productsChosen[j].productId === 4) {
-						let warning = `${productsChosen[i].productName} mag niet met ${productsChosen[j].productName} gecombineerd worden.`
+
+					warning = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
+					if (productsChosen[j].productId === 3 || productsChosen[j].productId === 5) {
+						reason = explosionDanger;
+						alert(warning + reason);
 						this.buttonRef.current.setAttribute("disabled", true);
-						this.setState({	warningMessage: warning })
+					} else if (productsChosen[j].productId === 4) {
+						reason = odourNuisance;
+						alert(warning + reason);
+						this.buttonRef.current.setAttribute("disabled", true);
 					}
 				}
+
 			}
 
 			// Check for forbidden combinations with Zwavelwater
 			if (productsChosen[i].productId === 3) {
 				for (let j = 0; j < productsChosen.length; j++) {
-					if (productsChosen[j].productId === 2 || productsChosen[j].productId === 4) {
-						let warning = `${productsChosen[i].productName} mag niet met ${productsChosen[j].productName} gecombineerd worden.`
+					warning = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
+					if (productsChosen[j].productId === 2) {
+						reason = odourNuisance;
+						alert(warning + reason);
 						this.buttonRef.current.setAttribute("disabled", true);
-						this.setState({	warningMessage: warning })
-					} 
+					} else if (productsChosen[j].productId === 4) {
+						reason = explosionDanger;
+						alert(warning + reason);
+						this.buttonRef.current.setAttribute("disabled", true);
+					}
+				}
+			}
+
+			// Check for forbidden combinations with Loodgouduranium
+			if (productsChosen[i].productId === 4) {
+				for (let j = 0; j < productsChosen.length; j++) {
+					warning = this.warningMessage(productsChosen[i].productName, productsChosen[j].productName);
+					if (productsChosen[j].productId === 5) {
+						reason = explosionDanger;
+						alert(warning + reason);
+						this.buttonRef.current.setAttribute("disabled", true);
+					}
 				}
 			}
 
 		}
-		
 	}
 
-	// Save order in database (CORS-issue)
+
+	// Save order in database
 	submitOrder = (e) => {
 		e.preventDefault();
 
-		let orderData = {
-			companyName: this.state.companyName,
-			telephone: this.state.telephone,
-			email: this.state.email,
-			city: this.state.city,
-			street: this.state.street,
-			postal: this.state.postal,
-			streetNumber: this.state.streetNumber,
-			productsChosen: this.state.productsChosen
-		}
+		let orderData = this.state.shipment;
 
-		axios.post("http://localhost:3001/api/shipment/save", orderData)
+		axios.post("http://localhost:3001/api/shipment/save", { 
+			headers: { 
+			'Access-Control-Allow-Origin' : '*',
+			'Access-Control-Allow-Methods' : 'POST',
+			'Content-Type:' : 'application/json'
+			},
+			orderData
+		})
 			.then((res) => {
 				if (res.data.success) {
-					console.log('success')
+					console.log('Success')
 				} else {
-					console.log('Something went wrong')
+					console.log(res)
 				}
 			})
 			.catch((error) => {
@@ -180,46 +211,42 @@ class CreateShipment extends Component {
 				<div className="shipment-fields">
 					<div className="field">
 						<label>Company</label><br/>
-						<input type="text" onChange={(e) => this.setState({companyName: e.target.value})}></input>
+						<input type="text" onChange={(e) => this.setState({shipment: {...this.state.shipment, companyName: e.target.value}})}/>
 					</div>
 					<div className="field">
 					<label>Telephone</label><br/>
-						<input type="number" onChange={(e) => this.setState({telephone: e.target.value})}></input>
+						<input type="number" onChange={(e) => this.setState({shipment: {...this.state.shipment, telephone: e.target.value}})}/>
 					</div>
 					<div className="field">
 					<label>E-mail</label><br/>
-						<input type="text" onChange={(e) => this.setState({email: e.target.value})}></input>
+						<input type="email" onChange={(e) => this.setState({shipment: {...this.state.shipment, email: e.target.value}})}/>
 					</div>
 					<div className="field">
 					<label>City</label><br/>
-						<input type="text" onChange={(e) => this.setState({city: e.target.value})}></input>
+						<input type="text" onChange={(e) => this.setState({shipment: {...this.state.shipment, city: e.target.value}})}/>
 					</div>
 					<div className="field">
 					<label>Street</label><br/>
-						<input type="text" onChange={(e) => this.setState({street: e.target.value})}></input>
+						<input type="text" onChange={(e) => this.setState({shipment: {...this.state.shipment, street: e.target.value}})}/>
 					</div>
 					<div className="field">
 					<label>Postal code</label><br/>
-						<input type="text" onChange={(e) => this.setState({postal: e.target.value})}></input>
+						<input type="text" onChange={(e) => this.setState({shipment: {...this.state.shipment, postal: e.target.value}})}/>
 					</div>
 					<div className="field">
 					<label>Street number</label><br/>
-						<input type="text" onChange={(e) => this.setState({streetNumber: e.target.value})}></input>
+						<input type="text" onChange={(e) => this.setState({shipment: {...this.state.shipment, streetNumber: e.target.value}})}/>
 					</div>
-					<div id="submit-button" className="field">
+				</div>
+				<div className="field">
 						<div>
-							<button ref={this.buttonRef} className="" title={this.state.buttonHoverText} type="submit">
+							<button ref={this.buttonRef} className="submit-button" title={this.state.buttonHoverText} type="submit">
 								Place order
 							</button>
 						</div>
 					</div>
-				</div>
 				</form>
-
 			</motion.div>
-			<div className="warning-section">
-				<div className="warning-content">{this.state.warningMessage}</div>
-			</div>
 			</>
 		);
 	}
